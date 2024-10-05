@@ -3,7 +3,7 @@ import { useStore } from './store'
 export const useAppStore = () => {
     //states
     const milPosition = useStore(state => state.milPosition)
-    const runnerPosition = useStore(state => state.runnerPosition)
+    //const runnerPosition = useStore(state => state.runnerPosition)
     const page = useStore(state => state.page)
     const windowSize = useStore(state => state.windowSize)
     const config = useStore(state => state.config)
@@ -11,10 +11,10 @@ export const useAppStore = () => {
     //actions
     const setWindowSize = useStore(state => state.setWindowSize)
 
-    const moveRunnerUp = useStore(state => state.moveRunnerUp)
-    const moveRunnerDown = useStore(state => state.moveRunnerDown)
-    const moveRunnerLeft = useStore(state => state.moveRunnerLeft)
-    const moveRunnerRight = useStore(state => state.moveRunnerRight)
+    // const moveRunnerUp = useStore(state => state.moveRunnerUp)
+    // const moveRunnerDown = useStore(state => state.moveRunnerDown)
+    // const moveRunnerLeft = useStore(state => state.moveRunnerLeft)
+    // const moveRunnerRight = useStore(state => state.moveRunnerRight)
 
     const moveMilUp = useStore(state => state.moveMilUp)
     const moveMilDown = useStore(state => state.moveMilDown)
@@ -27,15 +27,10 @@ export const useAppStore = () => {
 
     return {
         milPosition,
-        runnerPosition,
         page,
         windowSize,
         config,
         setWindowSize,
-        moveRunnerUp,
-        moveRunnerDown,
-        moveRunnerLeft,
-        moveRunnerRight,
         moveMilUp,
         moveMilDown,
         moveMilLeft,

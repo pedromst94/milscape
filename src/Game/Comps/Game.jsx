@@ -14,14 +14,12 @@ import { Runner } from "./Runner";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useRunnerPosition } from "../hooks/useRunnerPosition";
 
 export default function Game () {
     //configuracion
-
-    const {windowSize, config,
-        moveRunnerUp, moveRunnerDown, moveRunnerLeft, moveRunnerRight,
-        runnerPosition, milPosition
-        } = useAppStore()
+    const {runnerPosition, moveRunnerUp, moveRunnerDown, moveRunnerLeft, moveRunnerRight} = useRunnerPosition()
+    const {windowSize, config, milPosition } = useAppStore()
     useConstrolsConfig(windowSize, moveRunnerUp, moveRunnerDown, moveRunnerLeft, moveRunnerRight)
     const gameConfig = useMemo( () => {
             return {
@@ -41,9 +39,7 @@ export default function Game () {
         console.log(tableContainerRef.current.offsetWidth, cellDimension)
         const newWidth = tableContainerRef.current.offsetWidth / 6
         setCellDimension(newWidth)
-         console.log(gameConfig)
-         console.log(cellDimension)
-    }, [])
+    }, [windowSize])
     //configuracion animacion
     const {contextSafe} = useGSAP({ scope: tableContainerRef})
     const moveRunnerRightGSAP = contextSafe(() => {
@@ -59,6 +55,7 @@ export default function Game () {
         if(newXposition >= gameConfig.map.table[runnerPosition.y].length) return //cambiar por variuable xtablelength???
         if(gameConfig.map.table[runnerPosition.y][newXposition] === 'x') return
         moveRunnerRightGSAP()
+        console.log(runnerPosition)
     }
 
     const moveRunnerLeftGSAP = contextSafe(() => {
@@ -74,6 +71,7 @@ export default function Game () {
         if(newXposition < 0) return //cambiar por variuable xtablelength???
         if(gameConfig.map.table[runnerPosition.y][newXposition] === 'x') return
         moveRunnerLeftGSAP()
+        console.log(runnerPosition)
     }
 
     const moveRunnerUpGSAP = contextSafe(() => {
@@ -90,6 +88,7 @@ export default function Game () {
         if(newYposition < 0) return //cambiar por variuable xtablelength???
         if(gameConfig.map.table[newYposition][runnerPosition.x] === 'x') return
         moveRunnerUpGSAP()
+        console.log(runnerPosition)
     }
 
     const moveRunnerDownGSAP = contextSafe(() => {
@@ -106,9 +105,10 @@ export default function Game () {
         if(newYposition  >= gameConfig.map.table.length) return //cambiar por variuable xtablelength???
         if(gameConfig.map.table[newYposition][runnerPosition.x] === 'x') return
         moveRunnerDownGSAP()
+        console.log(runnerPosition)
     }
 
-
+    console.log(runnerPosition)
 
     return <>
         <div className="game-container" >
