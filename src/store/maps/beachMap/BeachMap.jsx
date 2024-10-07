@@ -1,3 +1,5 @@
+import { Children } from "react"
+
 const BeachMap = (props) => (
   <svg
     className="map-svg"
@@ -7,6 +9,7 @@ const BeachMap = (props) => (
     viewBox="0 0 95.25 476.25"
     {...props}
   >
+    
     <defs>
       <filter
         id="a"
@@ -10681,7 +10684,7 @@ const BeachMap = (props) => (
         }}
       />
     </g>
-    <g transform="matrix(1.40595 0 0 .99938 -19.577 -6.066)">
+    <g transform="matrix(1.40595 0 0 .99938 -19.577 -6.066)" className="palm">
       <path
         d="M55.097 47.542c-1.032-7.092-1.945-14.327-1.749-22.893l2.47.047c1.55 7.217 1.507 15.046 1.476 22.871z"
         style={{
