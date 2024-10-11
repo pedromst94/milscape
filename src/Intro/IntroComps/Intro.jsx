@@ -5,6 +5,7 @@ import { useIntroAnimation } from '../introHooks/useIntroAnimation'
 import Runner1Face from '../Graphics/Runner1Face'
 import StartButton from './StartButton'
 
+
 export function Intro () {
 
     const {coverContainer, isAnimating, setIsAnimating} = useIntroAnimation()

@@ -282,10 +282,14 @@ main{
   position: relative;
 }
 
+#table-mover {
+  position: relative;
+}
+
 .map-container .map-svg {
   width: 100%;
   height: auto;
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
 }
@@ -295,4 +299,88 @@ main{
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.map-svg-top {
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+ /*top model---------------------------------------------------------*/
+.top-model {
+  width: 100%;
+  height: 10vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom: 1px solid whitesmoke;
+  z-index: 7;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgba(111, 108, 9, 0.7);
+}
+
+.top-model-img {
+  height: 8vh;
+  width: auto;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+}
+
+/*result model----------------------------------------------------------------------*/
+.result-model-background {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(178, 179, 181, 0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-model {
+  position: relative;
+  background-color: #1094a5;
+  z-index: 8;
+  width: 80vw;
+  height: 80vh;
+  gap: 2rem;
+  border-radius: 20px;
+  border: 5px solid whitesmoke;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-model img {
+  width: 50vw;
+  height: auto;
+}
+
+.result-model h2 {
+  font-size: 2rem;
+}
+.result-model p {
+  font-size: 1.3rem;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: rgb(191, 0, 0);
+}
+
+.yellow {
+  color: yellow;
 }

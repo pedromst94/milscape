@@ -1,21 +1,24 @@
 import { useEffect } from "react"
 
-export const useConstrolsConfig = (windowSize, moveRunnerUp, moveRunnerDown, moveRunnerLeft, moveRunnerRight) => {
+export const useConstrolsConfig = (windowSize, tryRunnerDown,
+    tryRunnerLeft,
+    tryRunnerUp,
+    tryRunnerRight) => {
     const {isMobile} = windowSize
 
     useEffect(() =>{
         const handlePressDown = (e) => {
             if(e.key === 'w') {
-                moveRunnerUp()
+                tryRunnerUp()
                 return
             } else if(e.key === 'a') {
-                moveRunnerLeft()
+                tryRunnerLeft()
                 return
             } else if(e.key === 's') {
-                moveRunnerDown()
+                tryRunnerDown()
                 return
             } else if(e.key === 'd') {
-                moveRunnerRight()
+                tryRunnerRight()
                 return
             } else {
                 return
