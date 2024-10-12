@@ -384,3 +384,28 @@ main{
 .yellow {
   color: yellow;
 }
+
+/*count down model ----------------------------------*/
+.count-down-model {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 7;
+  background-color: #083c58df;
+}
+
+.count-down-model h2 {
+  font-size: 2rem;
+  color: goldenrod;
+}
+
+.count-down-model p {
+  font-size: 5rem;
+  margin-top: 1rem;
+}

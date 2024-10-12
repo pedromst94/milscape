@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useRef } from 'react'
 
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -6,9 +7,17 @@ import { useGSAP } from '@gsap/react'
 import tomasin from '../assets/imgs/tomasin.svg'
 import happyWin from '../assets/imgs/happyWin.svg'
 import sadLoose from '../assets/imgs/sadLoose.svg'
-import { useRef } from 'react'
+import mil1Face from '../assets/imgs/mil1Face.svg'
+import mil2Face from '../assets/imgs/mil2Face.svg'
+import mil3Face from '../assets/imgs/mil3Face.svg'
+import runner1Face from '../assets/imgs/runner1Face.svg'
+import runner2Face from '../assets/imgs/runner2Face.svg'
+import runner3Face from '../assets/imgs/runner3Face.svg'
+
 
 export default function ResultModel (props) {
+    const {result, milName, milIdx, runnerIdx} = props
+
     const resultModelRef = useRef()
     useGSAP(()=>{
         gsap.set(resultModelRef.current, {y: '100vh'})
@@ -20,7 +29,6 @@ export default function ResultModel (props) {
         tl.to(resultModelRef.current, {y: 0}, .5)
     }, {scope: resultModelRef})
 
-    const {result, milName} = props
 
     const resultTitle = useMemo(()=> {
         if(result === 'runnerWins') {
@@ -54,13 +62,32 @@ export default function ResultModel (props) {
 
     const resultImg = useMemo(()=> {
         if(result === 'runnerWins') {
-            return happyWin
+            switch (runnerIdx) {
+                case 0:
+                    return runner1Face
+                case 1:
+                    return runner2Face
+                case 2:
+                    return runner3Face
+                default:
+                    return happyWin
+            }
         } else if (result === 'milWins') {
-            return sadLoose
+            switch (milIdx) {
+                case 0:
+                    return mil1Face
+                case 1:
+                    return mil2Face
+                case 2:
+                    return mil3Face
+                default:
+                    return sadLoose
+            }
         } else {
             return tomasin
         }
     }, [])
+
 
     return <>
         <div className="result-model-background" ref={resultModelRef}>

@@ -2,9 +2,9 @@ import { useMemo } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { useRef } from "react"
-import mil1Face from '../assets/imgs/mil1Face.png'
-import mil2Face from '../assets/imgs/mil2Face.png'
-import mil3Face from '../assets/imgs/mil3Face.png'
+import mil1Face from '../assets/imgs/mil1Face.svg'
+import mil2Face from '../assets/imgs/mil2Face.svg'
+import mil3Face from '../assets/imgs/mil3Face.svg'
 import putibelloFace from '../assets/imgs/putibelloFace.svg'
 
 gsap.registerPlugin(useGSAP);

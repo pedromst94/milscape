@@ -17,6 +17,7 @@ import { useGSAP } from "@gsap/react";
 import { useRunnerAnimation } from "../hooks/useRunnerAnimation";
 import TopModel from "./TopModel";
 import ResultModel from "./ResultModel";
+import CountDownModel from "./CountDownModel";
 
 gsap.registerPlugin(useGSAP);
 
@@ -26,6 +27,7 @@ export default function Game () {
     //configuracion
     const {windowSize, config, milPosition } = useAppStore()
     const [topModelIsActive, setTopModelIsActive] = useState(false)
+    const [countModelIsActive, setCountDownModelActive] = useState(true)
     const [result, setResult] = useState({
         finished: false,
         whoWins: ''
@@ -63,17 +65,22 @@ export default function Game () {
 
     return <>
         <div className="game-container" >
+            {countModelIsActive && 
+                <CountDownModel setCountDownModelActive={setCountDownModelActive}/>
+            }
             {result.finished &&
             <ResultModel 
                 result={result.whoWins}
                 milName={gameConfig.mil.name}
+                milIdx={config.milIndex}
+                runnerIdx={config.runnerIndex}
             />}
             {topModelIsActive && 
             <TopModel 
                 milName={gameConfig.mil.name} 
                 milIndex={config.milIndex}
                 setTopModelIsActive={setTopModelIsActive}
-                putibelloAdvise={true}
+                putibelloAdvise={false}
             />}
             <div className="map-container" ref={tableContainerRef} >
                 <div id="table-mover">
