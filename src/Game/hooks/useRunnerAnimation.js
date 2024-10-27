@@ -141,6 +141,7 @@ export const useRunnerAnimation = ({tableContainerRef, cellDimension, mapTable, 
         tryRunnerDown,
         tryRunnerLeft,
         tryRunnerUp,
-        tryRunnerRight
+        tryRunnerRight, 
+        runnerPosition
     }
 }

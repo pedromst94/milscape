@@ -18,6 +18,7 @@ import { useRunnerAnimation } from "../hooks/useRunnerAnimation";
 import TopModel from "./TopModel";
 import ResultModel from "./ResultModel";
 import CountDownModel from "./CountDownModel";
+import { useMilMove } from "../hooks/useMilMove";
 
 gsap.registerPlugin(useGSAP);
 
@@ -56,11 +57,27 @@ export default function Game () {
     const {tryRunnerDown,
         tryRunnerLeft,
         tryRunnerUp,
-        tryRunnerRight} = useRunnerAnimation({tableContainerRef, cellDimension, mapTable: gameConfig.map.table, setResult})
+        tryRunnerRight, runnerPosition} = useRunnerAnimation({tableContainerRef, cellDimension, mapTable: gameConfig.map.table, setResult})
     useConstrolsConfig(windowSize, tryRunnerDown,
             tryRunnerLeft,
             tryRunnerUp,
             tryRunnerRight)
+
+        //suegra entra al ruedo jejejjeje
+    const [milOnRoad, setMilOnRoad] = useState(false)
+    const [milRunning, setMilRunning] = useState(false)
+    
+    useEffect(()=>{
+        if(countModelIsActive) return
+        const milDelay = 5000
+        setTimeout(()=>{
+            setMilOnRoad(true)
+            setTopModelIsActive(true)
+            setMilRunning(true)
+        }, milDelay)
+    }, [countModelIsActive])
+
+    useMilMove({runnerPosition, cellDimension, mapTable: gameConfig.map.table, milRunning, setMilRunning, result, setResult, tableContainerRef})
 
 
     return <>
@@ -84,14 +101,13 @@ export default function Game () {
             />}
             <div className="map-container" ref={tableContainerRef} >
                 <div id="table-mover">
-                    <Runner dimension={cellDimension} character={gameConfig.runner} isRunner={true} />   
+                    <Runner dimension={cellDimension} character={gameConfig.runner} isRunner={true} />
+                    {milOnRoad && 
+                    <Runner dimension={cellDimension} character={gameConfig.mil} isRunner={false} />}       
                     <gameConfig.map.DownLevelComp />
                     <gameConfig.map.TopLevelComp />
                 </div>
             </div>
-            <button onClick={()=>setTopModelIsActive(true)}>
-                aaaaaa
-            </button>
             {windowSize.isMobile &&
              <MovePad 
                 tryRunnerRight={tryRunnerRight}
