@@ -23,7 +23,7 @@ export default function ResultModel (props) {
         gsap.set(resultModelRef.current, {y: '100vh'})
         const tl = gsap.timeline({defaults: {
             ease: 'power1.out',
-            duration: 1.5
+            duration: .75
         }})
 
         tl.to(resultModelRef.current, {y: 0}, .5)

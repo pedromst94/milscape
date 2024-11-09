@@ -274,12 +274,19 @@ main{
 
 .map-container {
   width: 90vw;
+  max-width: 600px;
   height: 70vh;
  /* border: 2px solid goldenrod;
   border-radius: 3px;*/
   overflow: hidden;
   background-color: aliceblue;
   position: relative;
+}
+
+@media only screen and (min-width: 480px) {
+  .map-container {
+    height: 90vh;
+  }
 }
 
 #table-mover {
@@ -299,6 +306,12 @@ main{
   position: absolute;
   top: 0;
   left: 0;
+}
+
+#putibelloImg {
+  width: 80%;
+  height: auto;
+  align-self: bottom;
 }
 
 .map-svg-top {
@@ -321,7 +334,8 @@ main{
   font-size: 2rem;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 5px;
   background-color: rgba(111, 108, 9, 0.7);
 }
 
@@ -351,6 +365,7 @@ main{
   background-color: #1094a5;
   z-index: 8;
   width: 80vw;
+  max-width: 500px;
   height: 80vh;
   gap: 2rem;
   border-radius: 20px;
@@ -363,6 +378,7 @@ main{
 
 .result-model img {
   width: 50vw;
+  max-width: 350px;
   height: auto;
 }
 

@@ -30,5 +30,5 @@ export const useConstrolsConfig = (windowSize, tryRunnerDown,
             return () => document.removeEventListener('keydown', handlePressDown)
         }
     }  
-    ,[windowSize])
+    ,[windowSize, tryRunnerDown, tryRunnerLeft, tryRunnerRight, tryRunnerUp])
 }

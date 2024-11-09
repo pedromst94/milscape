@@ -1,15 +1,24 @@
-import { useEffect, useRef, } from "react"
+import { useCallback, useEffect, useMemo, useRef, } from "react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { useMilPosition } from "./useMilPosition"
 
-export const useMilMove = ({runnerPosition, cellDimension, mapTable, milRunning, setMilRunning, result, setResult, tableContainerRef}) => {
-
+export const useMilMove = ({runnerPosition, dif, cellDimension, mapTable, milRunning, setMilRunning, result, setResult, tableContainerRef}) => {
 
     const {milPosition, moveMilUp, moveMilDown, moveMilLeft, moveMilRight} = useMilPosition()
     const {contextSafe} = useGSAP({ scope: tableContainerRef})
 
-    const checkResult = ({x, y}) => {
+    const milSpeed = useMemo(() => {
+        if (dif === 'easy') {
+            return 1500
+        } else if (dif === 'med') {
+            return 1000
+        } else if (dif === 'dif') {
+            return 500
+        }
+    }, [])
+
+    const checkResult = useCallback(({x, y}) => {
         if (x === runnerPosition.x && y === runnerPosition.y) {
             setResult({
                 finished: true,
@@ -19,7 +28,7 @@ export const useMilMove = ({runnerPosition, cellDimension, mapTable, milRunning,
             return true
         }
         else return false
-    }
+    }, [result.finished])
 
     const moveMilRightGSAP = contextSafe(() => {
         gsap.to('#mil', {
@@ -100,9 +109,13 @@ export const useMilMove = ({runnerPosition, cellDimension, mapTable, milRunning,
         const xDistanceAbsolute = Math.abs(xDistance)
         const yDistanceAbsolute = Math.abs(yDistance)
 
-        let newMilPosition
-
+        if(runnerPosition.y >= milPosition.y && milPosition.x === 4 && milPosition.y === 19) {
+            return completeMilMove('d')
+        }
         if(yDistanceAbsolute >= xDistanceAbsolute) { //estan a distinta altura
+            if(yDistance >= 0 && milPosition.y === 19 && milPosition.x < 4){ //posiciones especiales
+                return completeMilMove('r')
+            }
             if(yDistance >= 0) {                     //runner esta debajo
                 if (tryMilDown()) {
                     return completeMilMove('d')
@@ -126,7 +139,7 @@ export const useMilMove = ({runnerPosition, cellDimension, mapTable, milRunning,
             }
         }
         else if (yDistanceAbsolute < xDistanceAbsolute) {       //estan mas alejados horizontal que verticalmente
-            if (xDistance >= 0) {                                //esta a la derecha?
+            if (xDistance >= 0 ) {                                //esta a la derecha?
                 if(tryMilRight()) {
                     return completeMilMove('r')
                 } else if (yDistance >= 0 && tryMilDown()) {
@@ -152,33 +165,22 @@ export const useMilMove = ({runnerPosition, cellDimension, mapTable, milRunning,
 
     const moveAndCheck = () => {
         const actualMilPosition = milMove()
+        console.log('milpositoin',actualMilPosition)
         return checkResult( {
             x: actualMilPosition.x,
-            y: actualMilPosition.y
+            y: actualMilPosition.y,
         })
     }
 
+    let intervalId
 
     useEffect(()=> {
-        if(!milRunning) return
-        if(result.finished) return
-
-        let isFinished = false
-        const gameBounce = async () => {
-            function sleep(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms));
-              }
-            while (!isFinished) {
-                await sleep(1000)
-                isFinished = moveAndCheck()
-                console.log('milposition', milPosition)
-            }
-            
+        if(milRunning && !result.finished) {
+            intervalId = setInterval(moveAndCheck, milSpeed)
         }
-        gameBounce()
 
-
-
+        return () => clearInterval(intervalId)
 
     }, [milRunning, result])
+ 
 }

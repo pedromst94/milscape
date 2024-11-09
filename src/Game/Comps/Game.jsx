@@ -19,6 +19,7 @@ import TopModel from "./TopModel";
 import ResultModel from "./ResultModel";
 import CountDownModel from "./CountDownModel";
 import { useMilMove } from "../hooks/useMilMove";
+import Putibello from "./Putibello";
 
 gsap.registerPlugin(useGSAP);
 
@@ -39,7 +40,8 @@ export default function Game () {
                 runner: runnersChars[config.runnerIndex],
                 mil: milsChars[config.milIndex],
                 dif: config.difIndex === 0? 'easy' : config.difIndex === 1? 'med' : 'dif',
-                map: beachMap[config.mapIndex]
+                map: beachMap[config.mapIndex],
+                catOnRoad: config.difIndex >0 ? true: false
             } 
         }, []
     )
@@ -58,6 +60,7 @@ export default function Game () {
         tryRunnerLeft,
         tryRunnerUp,
         tryRunnerRight, runnerPosition} = useRunnerAnimation({tableContainerRef, cellDimension, mapTable: gameConfig.map.table, setResult})
+        
     useConstrolsConfig(windowSize, tryRunnerDown,
             tryRunnerLeft,
             tryRunnerUp,
@@ -77,7 +80,7 @@ export default function Game () {
         }, milDelay)
     }, [countModelIsActive])
 
-    useMilMove({runnerPosition, cellDimension, mapTable: gameConfig.map.table, milRunning, setMilRunning, result, setResult, tableContainerRef})
+    useMilMove({runnerPosition, dif: gameConfig.dif, cellDimension, mapTable: gameConfig.map.table, milRunning, setMilRunning, result, setResult, tableContainerRef})
 
 
     return <>
@@ -103,7 +106,10 @@ export default function Game () {
                 <div id="table-mover">
                     <Runner dimension={cellDimension} character={gameConfig.runner} isRunner={true} />
                     {milOnRoad && 
-                    <Runner dimension={cellDimension} character={gameConfig.mil} isRunner={false} />}       
+                    <Runner dimension={cellDimension} character={gameConfig.mil} isRunner={false} />} 
+                    {gameConfig.catOnRoad && 
+                        <Putibello putibelloSrcIdx={gameConfig.dif === 'med'? 0 : 1}/>
+                    }      
                     <gameConfig.map.DownLevelComp />
                     <gameConfig.map.TopLevelComp />
                 </div>
