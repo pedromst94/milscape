@@ -148,10 +148,10 @@ main{
   border: 1px solid whitesmoke;
   border-radius: 10px;
   font-size: 2rem;
-  animation: 2s ease-in-out infinite start-button-animation;
+  animation: 2s ease-in-out infinite scale-animation;
 }
 
-@keyframes start-button-animation {
+@keyframes scale-animation {
   0% {
     scale: 1.1;
   }
@@ -270,6 +270,7 @@ main{
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1rem 4rem;
+  position: relative;
 }
 
 .map-container {
@@ -286,6 +287,13 @@ main{
 @media only screen and (min-width: 480px) {
   .map-container {
     height: 90vh;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .map-container {
+    position: relative;
+    left: 8px;
   }
 }
 
@@ -424,4 +432,128 @@ main{
 .count-down-model p {
   font-size: 5rem;
   margin-top: 1rem;
+}
+
+/*------------------ANGRYBAR-----------------------*/
+
+.angry-bar-container {
+  background: #1E9600;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #FF0000, #FFF200, #1E9600);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #FF0000, #FFF200, #1E9600); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 70vh;
+  width: 10px;
+  display: flex;
+  border-radius: 10px;
+  border: 2px solid whitesmoke;
+  position: absolute;
+  z-index: 5;
+  top: 10px;
+  left: 5px;
+  align-items: start;
+}
+
+.angry-percent {
+  width: 100%;
+  background-color: rgb(39, 5, 5);
+  transition: height .7s ease-out;
+}
+
+@media only screen and (min-width: 480px) {
+  .angry-bar-container {
+    height: 90vh;
+    left: 25%;
+    width: 20px;
+  }
+}
+
+#top-angryness {
+  background: #FF0000;
+  animation: 1s ease-in-out infinite scale-animation;
+}
+
+
+/*test-------------------------------------------------------------------------*/
+.test-container-background{
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(178, 179, 181, 0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.test-container {
+  position: relative;
+  background-color: #1094a5;
+  z-index: 8;
+  width: 80vw;
+  max-width: 500px;
+  height: 80vh;
+  gap: 1rem;
+  border-radius: 20px;
+  border: 5px solid whitesmoke;
+  overflow-x: hidden;
+  display: flex;
+}
+
+.faces-container {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.test-face {
+  width: 40%;
+  height: auto; 
+}
+
+#test-mil-face {
+  transform: scaleX(-1);
+}
+
+.answer-item{
+  padding: 1rem;
+  border: 2px solid whitesmoke;
+  border-radius: 10px;
+  background-color: #0a5a64;
+  cursor: pointer;
+}
+
+.answer-item:active{
+  background-color: #157c89;
+}
+#test-questions{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem; 
+  font-size: 1.5rem;
+}
+#test-result {
+  scale:0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem; 
+  font-size: 1.5rem;
+}
+
+.test-mil-face-result {
+  width: 70%;
+  height: auto;
+  animation: 2s ease-in-out infinite scale-animation;
+}
+
+.bigger-letter-size {
+  font-size: 2rem;
 }

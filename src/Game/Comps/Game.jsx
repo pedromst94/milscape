@@ -20,6 +20,9 @@ import ResultModel from "./ResultModel";
 import CountDownModel from "./CountDownModel";
 import { useMilMove } from "../hooks/useMilMove";
 import Putibello from "./Putibello";
+import AngryBar from "./AngryBar";
+import { usePutibello } from "../hooks/usePutibello";
+import Test from "./Test";
 
 gsap.registerPlugin(useGSAP);
 
@@ -30,6 +33,7 @@ export default function Game () {
     const {windowSize, config, milPosition } = useAppStore()
     const [topModelIsActive, setTopModelIsActive] = useState(false)
     const [countModelIsActive, setCountDownModelActive] = useState(true)
+    const [testModalIsActive, setTestModalIsActive] = useState(false)
     const [result, setResult] = useState({
         finished: false,
         whoWins: ''
@@ -45,6 +49,12 @@ export default function Game () {
             } 
         }, []
     )
+
+    const [angryness, setAngryness] = useState(()=> {
+        if(gameConfig.dif === 'easy') return 0
+        if(gameConfig.dif === 'med') return 20
+        if(gameConfig.dif === 'dif') return 40
+    })
     
     const tableContainerRef = useRef()
     const [cellDimension, setCellDimension] = useState(0)
@@ -55,6 +65,7 @@ export default function Game () {
         console.log(newWidth)
         setCellDimension(newWidth)
     }, [windowSize])
+
     //configuracion animacion
     const {tryRunnerDown,
         tryRunnerLeft,
@@ -65,6 +76,12 @@ export default function Game () {
             tryRunnerLeft,
             tryRunnerUp,
             tryRunnerRight)
+
+    //gato
+
+    const {setPutibelloRuninng}=usePutibello({
+        mapTable: gameConfig.map.table, cellDimension, tableContainerRef, catOnRoad: gameConfig.catOnRoad, dif: gameConfig.dif
+    })
 
         //suegra entra al ruedo jejejjeje
     const [milOnRoad, setMilOnRoad] = useState(false)
@@ -85,9 +102,12 @@ export default function Game () {
 
     return <>
         <div className="game-container" >
+            {/* Barra de enfado */}
+            <AngryBar angryness={angryness}/>
             {countModelIsActive && 
                 <CountDownModel setCountDownModelActive={setCountDownModelActive}/>
             }
+            {/* Model de resultado */}
             {result.finished &&
             <ResultModel 
                 result={result.whoWins}
@@ -95,6 +115,7 @@ export default function Game () {
                 milIdx={config.milIndex}
                 runnerIdx={config.runnerIndex}
             />}
+            {/* Model de arriba */}
             {topModelIsActive && 
             <TopModel 
                 milName={gameConfig.mil.name} 
@@ -102,6 +123,18 @@ export default function Game () {
                 setTopModelIsActive={setTopModelIsActive}
                 putibelloAdvise={false}
             />}
+            {/* Modal de preguntas */}
+            {testModalIsActive &&
+                <Test   
+                    milName={gameConfig.mil.name.toLowerCase()}
+                    setTestModalIsActive={setTestModalIsActive}
+                    setMilRunning={setMilRunning}
+                    setPutibelloRuninng={setPutibelloRuninng}
+                    runnerName={gameConfig.runner.name.toLowerCase()}
+                    setAngryness={setAngryness}
+                    angryness={angryness}
+                />}
+
             <div className="map-container" ref={tableContainerRef} >
                 <div id="table-mover">
                     <Runner dimension={cellDimension} character={gameConfig.runner} isRunner={true} />
@@ -114,12 +147,15 @@ export default function Game () {
                     <gameConfig.map.TopLevelComp />
                 </div>
             </div>
+
             {windowSize.isMobile &&
              <MovePad 
                 tryRunnerRight={tryRunnerRight}
                 tryRunnerLeft={tryRunnerLeft}
                 tryRunnerUp={tryRunnerUp}
                 tryRunnerDown={tryRunnerDown}
+                setMilRunning={setMilRunning}
+                setTestModalIsActive={setTestModalIsActive}
             />}
         </div>
         
