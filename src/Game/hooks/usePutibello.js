@@ -4,6 +4,7 @@ import { useGSAP } from '@gsap/react'
 import { useEffect, useMemo, useState } from "react";
 
 export const usePutibello = ({mapTable, cellDimension, tableContainerRef, catOnRoad, dif}) => {
+
     gsap.registerPlugin(useGSAP);
     const {contextSafe} = useGSAP({scope: tableContainerRef})
     const {putibelloPosition, getInitialPutibelloPosition, movePutibelloUp, movePutibelloDown, movePutibelloLeft, movePutibelloRight} = usePutibelloPosition()
@@ -122,6 +123,7 @@ export const usePutibello = ({mapTable, cellDimension, tableContainerRef, catOnR
 
 
     return {
+        putibelloPosition,
         setPutibelloRuninng
     }
 }

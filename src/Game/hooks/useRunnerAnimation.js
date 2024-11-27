@@ -2,17 +2,20 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { useRef } from 'react'
 import { useRunnerPosition } from './useRunnerPosition'
+import { useEngatusado } from './useEngatusado'
 
 
 export const useRunnerAnimation = ({tableContainerRef, cellDimension, mapTable, setResult}) => {
 
     const {runnerPosition, moveRunnerUp, moveRunnerDown, moveRunnerLeft, moveRunnerRight} = useRunnerPosition()
+    const {checkEngatusation} = useEngatusado()
     const visualPosition = useRef(0)
 
     const checkResult = (x, y) => {
         if(mapTable[y][x] === 't') return setResult({finished: true, whoWins: 'tomasinWins'})
         else if(mapTable[y][x] === 'v') return setResult({finished: true, whoWins: 'runnerWins'})
-        else return
+        else checkEngatusation({rPosition: runnerPosition})
+    return
     }
 
     const {contextSafe} = useGSAP({ scope: tableContainerRef})

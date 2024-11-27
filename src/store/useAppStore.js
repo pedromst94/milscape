@@ -7,6 +7,7 @@ export const useAppStore = () => {
     const page = useStore(state => state.page)
     const windowSize = useStore(state => state.windowSize)
     const config = useStore(state => state.config)
+    const test = useStore(state => state.test)
 
     //actions
     const setWindowSize = useStore(state => state.setWindowSize)
@@ -24,13 +25,16 @@ export const useAppStore = () => {
     const setPage = useStore(state => state.setPage)
 
     const setConfiguration = useStore(state => state.setConfiguration)
+    const setTest = useStore(state => state.setTest)
 
     return {
         page,
         windowSize,
         config,
+        test,
         setWindowSize,
         setPage,
         setConfiguration,
+        setTest
     }
 }

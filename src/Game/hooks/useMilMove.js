@@ -3,20 +3,24 @@ import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { useMilPosition } from "./useMilPosition"
 
-export const useMilMove = ({runnerPosition, dif, cellDimension, mapTable, milRunning, setMilRunning, result, setResult, tableContainerRef}) => {
+export const useMilMove = ({runnerPosition, angryness, cellDimension, mapTable, milRunning, setMilRunning, result, setResult, tableContainerRef}) => {
 
     const {milPosition, moveMilUp, moveMilDown, moveMilLeft, moveMilRight} = useMilPosition()
     const {contextSafe} = useGSAP({ scope: tableContainerRef})
 
     const milSpeed = useMemo(() => {
-        if (dif === 'easy') {
-            return 1500
-        } else if (dif === 'med') {
-            return 1000
-        } else if (dif === 'dif') {
-            return 500
-        }
-    }, [])
+        if(angryness <10) return 2000
+        if(angryness <20) return 1800
+        if(angryness <30) return 1600
+        if(angryness <40) return 1400
+        if(angryness <50) return 1200
+        if(angryness <60) return 1000
+        if(angryness <70) return 800
+        if(angryness <80) return 600
+        if(angryness <90) return 400
+        if(angryness <=100) return 300
+        return 210
+    }, [angryness])
 
     const checkResult = useCallback(({x, y}) => {
         if (x === runnerPosition.x && y === runnerPosition.y) {

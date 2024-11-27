@@ -2,53 +2,25 @@ import { useState, useMemo, useEffect, useRef } from 'react'
 import {MILTEST} from '../assets/test_assets/milTest'
 import milFaces from '../assets/test_assets/milFaces/milFaces'
 import runnerFaces from '../assets/test_assets/runnerFaces/runnerFaces'
+import testTitle from '../assets/test_assets/title.svg'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { useAppStore } from '../../store/useAppStore'
 
 
-export default function Test ({milName, setTestModalIsActive, setMilRunning, setPutibelloRuninng, runnerName, angryness, setAngryness}) {
+export default function Test ({milName, setTestModalIsActive, setMilRunning,
+     setPutibelloRuninng, runnerName, angryness, setAngryness, isFirstTest, setIsFirstTest}) {
+    const {test, setTest} = useAppStore()
+
+    let actualTest
+
     const [testStage, setTestStage] = useState(0)
     const [choosedOption, setChoosedOption] = useState()
     const containerRef = useRef()
 
     gsap.registerPlugin(useGSAP);
     const {contextSafe} = useGSAP({scope: containerRef})
-
-    const setModalOff = () => {
-        setTestModalIsActive(false)
-        if (angryness < 100) setAngryness(angryness += questionObj.options[choosedOption].angryness_reaction)
-        setMilRunning(true)
-        setPutibelloRuninng(true)
-    }
-
-    const changeStage = contextSafe(()=> {
-        gsap.to('#test-questions', {
-            xPercent: -100,
-            duration: .5,
-            ease: 'power2.in',
-            onComplete: () => setTestStage(1)
-        })
-    })
-
-    useGSAP(()=> {
-        if(testStage === 1) {
-            gsap.to('#test-result', {
-                scale: 1,
-                duration: .5,
-                ease: 'power2.in'
-            })
-        }
-    }, {scope: containerRef, dependencies: [testStage]})
-
-    const desappear = contextSafe(()=> {
-        gsap.to('.test-container', {
-            scale: 5,
-            yPercent: 60,
-            duration: 3,
-            onComplete: ()=>setModalOff()
-        })
-    })
-
+    //desactivar movimiento del gato/mil
     useEffect(()=> {
         setMilRunning(false)
         setPutibelloRuninng(false)
@@ -62,18 +34,88 @@ export default function Test ({milName, setTestModalIsActive, setMilRunning, set
       }
 
     const questionObj = useMemo(()=> {
-        const randomQuestion = MILTEST[milName][Math.floor(Math.random() * MILTEST[milName].length)] //get a random question
-        shuffle(randomQuestion.options)                                         //barajamos opciones de respuesta
+        let randomQuestion
+        let randomIdx
+        if(test.length > 0) {
+            randomIdx = Math.floor(Math.random() * test.length)
+            randomQuestion = test[randomIdx]
+            actualTest = test.filter((question, index) => index !== randomIdx)
+        } else {
+            randomIdx = Math.floor(Math.random() * MILTEST[milName].length)
+            randomQuestion = MILTEST[milName][randomIdx] //get a random question
+            actualTest = MILTEST[milName].filter((question, index) => index !== randomIdx)
+        }
+        shuffle(randomQuestion.options) //barajamos opciones de respuesta
         return randomQuestion
-    }, [milName])
+    }, [])
 
-    const normalFace = useMemo(()=>{
-        return milFaces[milName].normalFace
-    }, [milName])
+    const setModalOff = () => {
+        setTestModalIsActive(false)
+        if (angryness < 100) setAngryness(angryness += questionObj.options[choosedOption].angryness_reaction)
+        setMilRunning(true)
+        setPutibelloRuninng(true)
+        if(isFirstTest) setIsFirstTest(false)
+    }
 
-    const runnerFace = useMemo(()=> {
-        return runnerFaces[runnerName]
-    }, [runnerName])
+    const changeStage = contextSafe(()=> {
+        gsap.to('#test-questions', {
+            xPercent: -100,
+            duration: .5,
+            ease: 'power2.in',
+            onComplete: () => setTestStage(1)
+        })
+    })
+
+    useGSAP(()=> {
+        if(testStage===0) {
+            if(isFirstTest){
+                gsap.set('#test-title', {autoAlpha: 1, scale: .3})
+                gsap.set('.test-container', {yPercent: 100})
+                const tl = gsap.timeline({
+                    defaults: {ease: 'none', duration: 1},
+                    onComplete: () => {
+                        if(isFirstTest) setIsFirstTest(false)
+                    }
+                })
+                tl.to('#test-title', {
+                        scale: 1.5,
+                        duration: 1.5
+                    })
+                tl.to('.test-container', {yPercent: 0}, '<')
+                tl.to('#test-title', {autoAlpha: 0, scale:3, duration: 1})
+            } else {
+                gsap.from('.test-container', {
+                         yPercent: 100
+                     })
+                gsap.to('.test-container', {
+                    yPercent: 0,
+                    duration: 1
+                 })
+            }
+
+
+        }
+        if(testStage === 1) {
+            gsap.to('#test-result', {
+                scale: 1,
+                duration: .5,
+                ease: 'power2.in'
+            })
+        }
+    }, {scope: containerRef, dependencies: [testStage]})
+
+    const desappear = contextSafe(()=> {
+        gsap.to('.test-container', {
+            scale: 5,
+            yPercent: 60,
+            duration: 1,
+            ease: 'power4.out',
+            onComplete: ()=>setModalOff()
+        })
+    })
+
+    const normalFace = milFaces[milName].normalFace
+    const runnerFace = runnerFaces[runnerName]
 
     const selectedAnswerBackground = (answerIdx)=>{
         if(choosedOption === null) return ''
@@ -86,7 +128,7 @@ export default function Test ({milName, setTestModalIsActive, setMilRunning, set
             return ''
         }
     }
-
+    //creador de handle clicks
     const createHandleClick = (optionIdx) => () => {
         setChoosedOption(optionIdx)
         changeStage()
@@ -97,7 +139,7 @@ export default function Test ({milName, setTestModalIsActive, setMilRunning, set
         if(questionObj.options[choosedOption]?.angryness_reaction <= 30) return milFaces[milName].angryFace
         return milFaces[milName].furiousFace
     }
-
+    //autodesaparicion
     useEffect(()=> {
         let timeOutId 
         if(testStage === 1) {
@@ -105,9 +147,18 @@ export default function Test ({milName, setTestModalIsActive, setMilRunning, set
         }
         return () => clearTimeout(timeOutId)
     }, [testStage])
+    //borrar las preguntas ya usadas
+    useEffect(()=> {
+        return () => {
+            setTest(actualTest)
+        }
+    }, [])
 
     return <>
     <div className="test-container-background" ref={containerRef}>
+        {isFirstTest && 
+            <img src={testTitle} alt="test title" id="test-title" />
+        }
         <div className="test-container">
         {testStage === 0 &&      //paso 1, preguntas
             <div id='test-questions'>
@@ -146,7 +197,7 @@ export default function Test ({milName, setTestModalIsActive, setMilRunning, set
                     }}
                 >
                     {questionObj.options[choosedOption].angryness_reaction > 0 ?
-                        `Furia subiendo un ${questionObj.options[choosedOption].angryness_reaction} %...` :
+                        `Furia subiendo un ${questionObj.options[choosedOption].angryness_reaction}%...` :
                         '¡Respuesta correcta!'
                     }
                 </p>

@@ -6,6 +6,7 @@ export const useStore = create((set, get) => ({
     page: 'cover',
     windowSize: {},
     config: {},
+    test: [],
     setWindowSize: (newWindowSize) => {
         set({ windowSize: newWindowSize })
     },
@@ -54,6 +55,9 @@ export const useStore = create((set, get) => ({
     },
     setConfiguration: (newConfiguration) => {
         set( {config: newConfiguration} )
+    },
+    setTest: (newTest) => {
+        set({test: newTest})
     }
 
 }))

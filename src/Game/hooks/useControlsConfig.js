@@ -21,6 +21,7 @@ export const useConstrolsConfig = (windowSize, tryRunnerDown,
                 tryRunnerRight()
                 return
             } else {
+                window.alert('Controles: \nW: arriba\nA: izquierda\nS: abajo\nD: derecha')
                 return
             }
         }

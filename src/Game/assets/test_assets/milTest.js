@@ -119,6 +119,46 @@ export const MILTEST = {
                     mil_msg: 'Dolores se ha vuelto blanca de la ira, date prisa'
                 }
             ]
+        },
+        {
+            question: 'Hijo, has visto mis nuevos rulos? Son de Damn&Beaty&Swarsfchpof',
+            options: [
+                {
+                    answer: 'Aprende a pronunciar, maldito troglodita',
+                    angryness_reaction: 35,
+                    mil_msg: 'Dolores se ha vuelto blanca de la ira, huye'
+                },
+                {
+                    answer: 'Te han timado',
+                    angryness_reaction: 15,
+                    mil_msg: 'La belleza sale cara estúpido...'
+                },
+                {
+                    answer: 'No me había dado cuenta, te quedan ..bien',
+                    angryness_reaction: 20,
+                    mil_msg: '¿Los ahorros de un mes para no te des ni cuenta maldito paleto?'
+                }
+            ]
+        },
+        {
+            question: 'Le he comprado este vestido a mi hija..',
+            options: [
+                {
+                    answer: 'Es fácil de quitar?',
+                    angryness_reaction: 50,
+                    mil_msg: 'Dolores se ha vuelto blanca de la ira, huye'
+                },
+                {
+                    answer: 'Ya has estado otra vez en el Primark?',
+                    angryness_reaction: 20,
+                    mil_msg: 'Idiota'
+                },
+                {
+                    answer: 'Le quedará muy bien',
+                    angryness_reaction: 25,
+                    mil_msg: 'A ver cuándo le compras tu algo no?'
+                }
+            ]
         }
     ],
     'pam': [
@@ -241,6 +281,46 @@ export const MILTEST = {
                     mil_msg: 'ohohoh, ven pacá querido...'
                 }
             ]
+        },
+        {
+            question: 'Darling, qué haces el finde?',
+            options: [
+                {
+                    answer: 'Me voy a comer un buen cocido con mis amigotes',
+                    angryness_reaction: 25,
+                    mil_msg: '¿COCIDO? Eso lleva animales muertos'
+                },
+                {
+                    answer: 'He quedado para ver el partido del Valladolid',
+                    angryness_reaction: 25,
+                    mil_msg: 'Estás todo el día fuera de casa'
+                },
+                {
+                    answer: 'Me quedaré en casa con tu hija para descansar',
+                    angryness_reaction: 25,
+                    mil_msg: 'Maldito vago, tienes a mi hija muerta del aburrimiento'
+                }
+            ]
+        },
+        {
+            question: 'Oye, darling, hace mucho que no veo a mis consuegros',
+            options: [
+                {
+                    answer: 'Y es mejor que siga así',
+                    angryness_reaction: 40,
+                    mil_msg: 'Pam se ha puesto roja de la ira, huye'
+                },
+                {
+                    answer: 'Porque no quieren verte',
+                    angryness_reaction: 20,
+                    mil_msg: 'Jojojo, que niño tan gracioso...'
+                },
+                {
+                    answer: 'Se han ido a Jamaica a vivir',
+                    angryness_reaction: 30,
+                    mil_msg: 'Pero si los vi el otro día en la calle Laurel'
+                }
+            ]
         }
     ],
     'griselda': [
@@ -353,7 +433,7 @@ export const MILTEST = {
                     mil_msg: 'Serás maldito, te perseguiré como yo quiera'
                 },
                 {
-                    answer: 'La caliento todos los días',
+                    answer: 'Ya la caliento todos los días, qué más quieres',
                     angryness_reaction: 40,
                     mil_msg: 'Griselda se ha vuelto morada de la ira, huye!'
                 },
@@ -380,7 +460,7 @@ export const MILTEST = {
                 {
                     answer: '¿Ha vuelto tu marido?',
                     angryness_reaction: 50,
-                    mil_msg: '...\nHuye'
+                    mil_msg: '...<br>Huye'
                 }
             ]
         },
@@ -401,6 +481,46 @@ export const MILTEST = {
                     answer: 'Por el amor que le tengo a tu hija me ilumina la mirada',
                     angryness_reaction: 0,
                     mil_msg: 'Griselda a estado a punto de soltar el cuchillo por un momento... pero ha sido un espejismo huye!'
+                }
+            ]
+        },
+        {
+            question: '¡Tengo que hablar contigo!',
+            options: [
+                {
+                    answer: 'Calla, estoy haciendo un clausulazo',
+                    angryness_reaction: 40,
+                    mil_msg: 'Griselda se ha puesto morada, hute'
+                },
+                {
+                    answer: '¿sabes hablar?',
+                    angryness_reaction: 30,
+                    mil_msg: 'Te voy a ...'
+                },
+                {
+                    answer: 'Vale, pero no me grites',
+                    angryness_reaction: 35,
+                    mil_msg: 'NO ESTOY GRITANDO'
+                }
+            ]
+        },
+        {
+            question: 'Mira niño, he decidido hacerme artista',
+            options: [
+                {
+                    answer: 'Qué bien, así estarás entretenida',
+                    angryness_reaction: 20,
+                    mil_msg: '¿no queréis verme?'
+                },
+                {
+                    answer: '¿Otra vez?',
+                    angryness_reaction: 25,
+                    mil_msg: 'LA OTRA VEZ NO IBA EN SERIO'
+                },
+                {
+                    answer: 'Griselda, deja de hacer el tonto por favor',
+                    angryness_reaction: 40,
+                    mil_msg: 'Griselda se ha vuelto morada de la ira, huye!'
                 }
             ]
         }

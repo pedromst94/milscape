@@ -23,6 +23,8 @@ import Putibello from "./Putibello";
 import AngryBar from "./AngryBar";
 import { usePutibello } from "../hooks/usePutibello";
 import Test from "./Test";
+import { useTest } from "../hooks/useTest";
+import { useEngatusado } from "../hooks/useEngatusado";
 
 gsap.registerPlugin(useGSAP);
 
@@ -52,8 +54,8 @@ export default function Game () {
 
     const [angryness, setAngryness] = useState(()=> {
         if(gameConfig.dif === 'easy') return 0
-        if(gameConfig.dif === 'med') return 20
-        if(gameConfig.dif === 'dif') return 40
+        if(gameConfig.dif === 'med') return 25
+        if(gameConfig.dif === 'dif') return 50
     })
     
     const tableContainerRef = useRef()
@@ -67,10 +69,8 @@ export default function Game () {
     }, [windowSize])
 
     //configuracion animacion
-    const {tryRunnerDown,
-        tryRunnerLeft,
-        tryRunnerUp,
-        tryRunnerRight, runnerPosition} = useRunnerAnimation({tableContainerRef, cellDimension, mapTable: gameConfig.map.table, setResult})
+    const {tryRunnerDown, tryRunnerLeft, tryRunnerUp, tryRunnerRight, runnerPosition} = 
+        useRunnerAnimation({tableContainerRef, cellDimension, mapTable: gameConfig.map.table, setResult})
         
     useConstrolsConfig(windowSize, tryRunnerDown,
             tryRunnerLeft,
@@ -79,26 +79,36 @@ export default function Game () {
 
     //gato
 
-    const {setPutibelloRuninng}=usePutibello({
+    const {putibelloPosition, setPutibelloRuninng}=usePutibello({
         mapTable: gameConfig.map.table, cellDimension, tableContainerRef, catOnRoad: gameConfig.catOnRoad, dif: gameConfig.dif
     })
+
 
         //suegra entra al ruedo jejejjeje
     const [milOnRoad, setMilOnRoad] = useState(false)
     const [milRunning, setMilRunning] = useState(false)
     
     useEffect(()=>{
+        let timeOutId
         if(countModelIsActive) return
-        const milDelay = 5000
-        setTimeout(()=>{
+        const milDelay = 3000
+        timeOutId = setTimeout(()=>{
             setMilOnRoad(true)
             setTopModelIsActive(true)
             setMilRunning(true)
         }, milDelay)
+
+        return ()=>clearTimeout(timeOutId)
     }, [countModelIsActive])
 
-    useMilMove({runnerPosition, dif: gameConfig.dif, cellDimension, mapTable: gameConfig.map.table, milRunning, setMilRunning, result, setResult, tableContainerRef})
+    useMilMove({runnerPosition, angryness, cellDimension, mapTable: gameConfig.map.table, milRunning, setMilRunning, result, setResult, tableContainerRef})
 
+    //test
+    const {isFirstTest, setIsFirstTest} = useTest({testModalIsActive, setTestModalIsActive, dif: gameConfig.dif, milRunning, finished: result.finished})
+
+    //engatusado
+    console.log('ENGATUSADO', runnerPosition)
+    const { engatusado, setEngatusado, checkEngatusation } = useEngatusado({runnerPosition, putibelloPosition})
 
     return <>
         <div className="game-container" >
@@ -133,6 +143,8 @@ export default function Game () {
                     runnerName={gameConfig.runner.name.toLowerCase()}
                     setAngryness={setAngryness}
                     angryness={angryness}
+                    isFirstTest={isFirstTest}
+                    setIsFirstTest={setIsFirstTest}
                 />}
 
             <div className="map-container" ref={tableContainerRef} >
@@ -141,7 +153,7 @@ export default function Game () {
                     {milOnRoad && 
                     <Runner dimension={cellDimension} character={gameConfig.mil} isRunner={false} />} 
                     {gameConfig.catOnRoad && 
-                        <Putibello putibelloSrcIdx={gameConfig.dif === 'med'? 0 : 1}/>
+                        <Putibello putibelloSrcIdx={gameConfig.dif === 'med'? 0 : 1} dimension={cellDimension}/>
                     }      
                     <gameConfig.map.DownLevelComp />
                     <gameConfig.map.TopLevelComp />
@@ -154,8 +166,8 @@ export default function Game () {
                 tryRunnerLeft={tryRunnerLeft}
                 tryRunnerUp={tryRunnerUp}
                 tryRunnerDown={tryRunnerDown}
-                setMilRunning={setMilRunning}
-                setTestModalIsActive={setTestModalIsActive}
+                engatusado={engatusado}
+                setEngatusado={setEngatusado}
             />}
         </div>
         

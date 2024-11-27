@@ -49,6 +49,20 @@ body {
   gap: 5px;
 }
 
+.engatusado-pad {
+  background-image: url('./Game/assets/imgs/engatusadoBackground.svg');
+  background-size: cover;
+}
+
+.engatusadoButton{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background: transparent;
+  color: whitesmoke;
+  border: 3px solid whitesmoke;
+}
+
 .moveButton {
   height: 40px;
   width: 40px;
@@ -317,9 +331,9 @@ main{
 }
 
 #putibelloImg {
-  width: 80%;
+  width: 60%;
   height: auto;
-  align-self: bottom;
+  vertical-align: baseline;
 }
 
 .map-svg-top {
@@ -434,6 +448,23 @@ main{
   margin-top: 1rem;
 }
 
+#number-cd {
+  scale: 0;
+  animation: 1s ease-in 0s 3 scale-out;
+}
+
+@keyframes scale-out {
+    0% {
+      scale: 6;
+    }
+    10%{
+      scale: 5.8
+    }
+    100% {
+      scale: 0;
+    }
+}
+
 /*------------------ANGRYBAR-----------------------*/
 
 .angry-bar-container {
@@ -497,6 +528,16 @@ main{
   border: 5px solid whitesmoke;
   overflow-x: hidden;
   display: flex;
+}
+
+#test-title {
+  z-index: 10;
+  align-self: center;
+  justify-self: center;
+  position: absolute;
+  width: 70vw;
+  height: auto;
+  max-width: 400px;
 }
 
 .faces-container {
